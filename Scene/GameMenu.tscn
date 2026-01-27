@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b6pv47a0svg80"]
+[gd_scene load_steps=7 format=3 uid="uid://b6pv47a0svg80"]
 
-[ext_resource type="VideoStream" uid="uid://dqo3ia6rjegw2" path="res://Video/StartScreen.ogv" id="1_53uoq"]
+[ext_resource type="VideoStream" uid="uid://cqwhsnfk4ykls" path="res://Video/StartScreen.ogv" id="1_53uoq"]
 [ext_resource type="Texture2D" uid="uid://cen6k18vpracr" path="res://images/tempMCAuraFarmingScreen.jpg" id="1_lvykh"]
-[ext_resource type="Script" uid="uid://c4k8ayj4pwbc4" path="res://Scene/StartScreen.gd" id="2_qwpw8"]
+[ext_resource type="Script" uid="uid://c4k8ayj4pwbc4" path="res://Script/StartScreen.gd" id="3_2l4ar"]
+[ext_resource type="AudioStream" uid="uid://m64ig0dbyr3p" path="res://Audio/Low Key Gliding - extended.mp3" id="4_2l4ar"]
 
 [sub_resource type="FontFile" id="FontFile_qwpw8"]
 cache/0/60/0/ascent = 0.0
@@ -42,7 +43,7 @@ offset_right = 1024.0
 offset_bottom = 576.0
 stream = ExtResource("1_53uoq")
 expand = true
-script = ExtResource("2_qwpw8")
+script = ExtResource("3_2l4ar")
 
 [node name="Start" type="Button" parent="."]
 layout_mode = 0
@@ -61,6 +62,10 @@ offset_bottom = 117.0
 theme = SubResource("Theme_lvykh")
 text = "Unbounded"
 editable = false
+
+[node name="StartScreenMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_2l4ar")
+autoplay = true
 
 [connection signal="finished" from="VideoStreamPlayer" to="VideoStreamPlayer" method="_on_finished"]
 [connection signal="pressed" from="Start" to="VideoStreamPlayer" method="_on_button_pressed"]
