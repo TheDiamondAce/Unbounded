@@ -11,8 +11,15 @@ config_version=5
 [application]
 
 config/name="Unbounded"
+run/main_scene="uid://b6pv47a0svg80"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=1024
+window/size/viewport_height=576
+window/stretch/mode="canvas_items"
 
 [dotnet]
 

@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://b6pv47a0svg80"]
+
+[ext_resource type="VideoStream" uid="uid://dqo3ia6rjegw2" path="res://Video/StartScreen.ogv" id="1_53uoq"]
+[ext_resource type="Texture2D" uid="uid://cen6k18vpracr" path="res://images/tempMCAuraFarmingScreen.jpg" id="1_lvykh"]
+[ext_resource type="Script" uid="uid://c4k8ayj4pwbc4" path="res://Scene/StartScreen.gd" id="2_qwpw8"]
+
+[sub_resource type="FontFile" id="FontFile_qwpw8"]
+cache/0/60/0/ascent = 0.0
+cache/0/60/0/descent = 0.0
+cache/0/60/0/underline_position = 0.0
+cache/0/60/0/underline_thickness = 0.0
+cache/0/60/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="Theme" id="Theme_lvykh"]
+default_font = SubResource("FontFile_qwpw8")
+default_font_size = 60
+
+[node name="GameMenu" type="Control"]
+layout_mode = 3
+anchor_right = 1.016
+anchor_bottom = 1.06
+offset_right = -16.384
+offset_bottom = -34.5601
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(510.5, 287.75)
+scale = Vector2(0.401172, 0.401736)
+texture = ExtResource("1_lvykh")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1024.0
+offset_bottom = 576.0
+stream = ExtResource("1_53uoq")
+expand = true
+script = ExtResource("2_qwpw8")
+
+[node name="Start" type="Button" parent="."]
+layout_mode = 0
+offset_left = 784.0
+offset_top = 290.0
+offset_right = 907.0
+offset_bottom = 343.0
+text = "Start"
+
+[node name="tempTitle" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 672.0
+offset_top = 21.0
+offset_right = 1000.0
+offset_bottom = 117.0
+theme = SubResource("Theme_lvykh")
+text = "Unbounded"
+editable = false
+
+[connection signal="finished" from="VideoStreamPlayer" to="VideoStreamPlayer" method="_on_finished"]
+[connection signal="pressed" from="Start" to="VideoStreamPlayer" method="_on_button_pressed"]
