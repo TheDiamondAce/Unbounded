@@ -23,7 +23,7 @@ func _on_button_pressed() -> void:
 	title.hide()
 	auraScene.hide()
 	startScene.play()
-	startMusic.volume_db == -15
+	startMusic.volume_db == -45
 	
 	pass # Replace with function body.
 
