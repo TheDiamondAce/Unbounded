@@ -1,11 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://c3tn0c3rftvgt"]
 
 [ext_resource type="Script" uid="uid://g2xgxeb670ri" path="res://Script/PlayerController.gd" id="1_3l2fi"]
+[ext_resource type="SpriteFrames" uid="uid://7edxy6uay8ty" path="res://Scene/MC_Anim.tres" id="2_p6jvd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p6jvd"]
-size = Vector2(20, 35)
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3l2fi"]
+size = Vector2(46, 120)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vm4wn"]
 size = Vector2(1202.5, 141)
@@ -19,14 +18,15 @@ script = ExtResource("1_3l2fi")
 
 [node name="Camera2D" type="Camera2D" parent="Rai"]
 
-[node name="temp" type="CollisionShape2D" parent="Rai"]
-position = Vector2(0, 7.5)
-shape = SubResource("RectangleShape2D_p6jvd")
+[node name="Rai_Animation" type="AnimatedSprite2D" parent="Rai"]
+position = Vector2(-5, 9)
+scale = Vector2(0.15, 0.15)
+sprite_frames = ExtResource("2_p6jvd")
+animation = &"duck"
 
-[node name="Sprite2D" type="Sprite2D" parent="Rai/temp"]
-position = Vector2(0.125, 1.90735e-06)
-scale = Vector2(19.75, 35)
-texture = SubResource("PlaceholderTexture2D_3l2fi")
+[node name="temp" type="CollisionShape2D" parent="Rai"]
+position = Vector2(-5, 9)
+shape = SubResource("RectangleShape2D_p6jvd")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 
