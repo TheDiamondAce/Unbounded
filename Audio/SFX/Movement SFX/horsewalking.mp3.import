@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b1e5m606ooww6"
+path="res://.godot/imported/horsewalking.mp3-ff4f7d6e53b0a4584caabdf8d0c1d1e7.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/Movement SFX/horsewalking.mp3"
+dest_files=["res://.godot/imported/horsewalking.mp3-ff4f7d6e53b0a4584caabdf8d0c1d1e7.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=120.0
+beat_count=0
+bar_beats=4

@@ -32,8 +32,8 @@ scale = Vector2(4595.75, 144)
 texture = SubResource("PlaceholderTexture2D_p6jvd")
 
 [node name="Kai" parent="." unique_id=530459196 instance=ExtResource("2_h7u5v")]
-position = Vector2(701, 501)
-hp = 100000000000.0
+position = Vector2(1768.9999, 489)
+hp = 200.0
 
 [node name="PlayerCamera" parent="." unique_id=1797126055 node_paths=PackedStringArray("player") instance=ExtResource("7_8exbv")]
 player = NodePath("../Rai")

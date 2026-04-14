@@ -9,7 +9,7 @@ class_name GhostOfKhan extends CharacterBody2D
 @export var sfx : AudioStreamPlayer2D
 
 @export_category("Sound Effect Audio Variables")
-var walking = preload("res://Audio/horsewalking.mp3")
+var walking = preload("res://Audio/SFX/Movement SFX/horsewalking.mp3")
 @export var walkTime : Timer
 
 const SPEED = 900 

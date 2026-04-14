@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://1ume7pe6dssh" path="res://Prefabs/Ghost_Of_Khan/ghost_of_khan.tscn" id="5_pvrid"]
 [ext_resource type="PackedScene" uid="uid://dl18gjlvl0of2" path="res://Prefabs/arrow.tscn" id="6_q3fs2"]
 [ext_resource type="Texture2D" uid="uid://bi3bsphv814km" path="res://images/Spritesheets/Background/T1343_f_1.jpg" id="7_3b470"]
-[ext_resource type="AudioStream" uid="uid://bjuxf3gt1jamx" path="res://Audio/Batzorig Vaanchig - Chinggis Khaanii Magtaal   Slowed + Reverb (1).mp3" id="8_y7qrv"]
+[ext_resource type="AudioStream" uid="uid://bjuxf3gt1jamx" path="res://Audio/Music/Batzorig Vaanchig - Chinggis Khaanii Magtaal   Slowed + Reverb (1).mp3" id="8_y7qrv"]
 [ext_resource type="Texture2D" uid="uid://mayixtxednoo" path="res://images/Spritesheets/Background/bolatbek-gabiden-dsL_tvf1Z-E-unsplash.jpg" id="9_q3fs2"]
 
 [sub_resource type="Animation" id="Animation_pvrid"]
@@ -158,6 +158,7 @@ texture = ExtResource("2_vkxmr")
 [node name="ArrowNode" type="Node2D" parent="." unique_id=84282985 groups=["GhostOfKhan"]]
 script = ExtResource("4_y7qrv")
 arrow_scene = ExtResource("6_q3fs2")
+amountOfArrows = 25
 
 [node name="GhostOfKhan" parent="." unique_id=1445261466 groups=["GhostOfKhan"] instance=ExtResource("5_pvrid")]
 position = Vector2(288, 458)
@@ -183,11 +184,11 @@ scale = Vector2(0.25, 0.25)
 script = ExtResource("5_aghwi")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D2/Bouncer" unique_id=523438189]
-position = Vector2(2152, -404)
+position = Vector2(3720, -412)
 shape = SubResource("RectangleShape2D_nuk6u")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D2/Bouncer" unique_id=93864535]
-position = Vector2(-4888, -404)
+position = Vector2(-6108, -448)
 shape = SubResource("RectangleShape2D_nuk6u")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=705874008]

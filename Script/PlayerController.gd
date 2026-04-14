@@ -21,6 +21,9 @@ class_name Player extends CharacterBody2D
 @export var attackArea : Area2D
 @export var maxComboLength : int
 @export var hurtBoxLayer : Area2D
+
+@export_category("Sound Variables")
+@export var sfx : AudioStreamPlayer2D
 #@onready var straightPunch = preload("res://FrameDataSystemV1/Rai/straight_punch.tscn")
 #@export var hitbox_shape : CollisionShape2D
 #@export var stats : Stats
@@ -32,6 +35,7 @@ var dash_duration = 0
 var cooldown = 0
 var isdashing = false
 var isAttacking = false
+var isDodging = false
 var flipped = 1	
 var isDucking = false
 var isInAir = false
@@ -46,20 +50,37 @@ var isInCombo
 var comboList = ["CorkScrew"]
 var currentCombo
 var awaitingForControls = false
-
-
+var sfxPlaying = false	
+var sfx_library = { 
+	#punch sound effects
+	"punch": [
+		preload("res://Audio/SFX/Attack_SFX/Punches/punch_sfx1.mp3"),
+		preload("res://Audio/SFX/Attack_SFX/Punches/punch_sfx2.mp3"),
+		preload("res://Audio/SFX/Attack_SFX/Punches/punch_sfx3.mp3")
+	],
+	#dash sound effects
+	"dash": [
+		preload("res://Audio/SFX/Movement SFX/Dash/dash1.mp3"),
+		preload("res://Audio/SFX/Movement SFX/Dash/dash2.mp3"),
+		preload("res://Audio/SFX/Movement SFX/Dash/dash3.mp3"),
+		preload("res://Audio/SFX/Movement SFX/Dash/dash4.mp3")
+	],
+	"corkscrew": [ preload("res://Audio/SFX/Attack_SFX/Combos/Corkscrew/corkscrew1.mp3")]
+	
+}
 
 	#to test out if healthbar works or not
 func _physics_process(delta: float) -> void:
-	if awaitingForControls:
-		velocity = Vector2.ZERO
-	
 	if currentCombo == "Corkscrew":
-		animationPlayer.play("corkscrew")
-		await get_tree().create_timer(0.5).timeout
-		currentCombo = ""
+		velocity = Vector2.ZERO
+	"""print(velocity.x)
+	print(direction)
+	print("On Floor?: " + str(is_on_floor()))
+	print("Dashing?: " + str(isdashing))"""
+	
 	combo_excecute()
 	input()
+	#Health Code to connect to script
 	healthBar.on_health_changed(currentHealth)
 	#fix this ungodly hitbox thingy whatever ts is and make it more better. This is just to fix the fact that hitbox doesnt flip properly.
 	if animSprite.flip_h == true:
@@ -68,7 +89,6 @@ func _physics_process(delta: float) -> void:
 	if animSprite.flip_h == false:
 		myHitbox.scale.x = 1
 		myHurtBox.scale.x = 1
-		
 	if direction == -1:
 		direction_offset = direction*7 - 9
 	if direction == 1:
@@ -88,10 +108,13 @@ func _physics_process(delta: float) -> void:
 	
 	direction = Input.get_axis("left", "right")
 		
-	if direction:
+	if direction && !isdashing && !isDodging:
 			velocity.x = direction * SPEED
 			animSprite.flip_h =direction<0
-			move_and_slide()
+		
+	else:	
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+	move_and_slide()
 	
 	# Add the gravity.
 	if not is_on_floor():
@@ -122,13 +145,11 @@ func _physics_process(delta: float) -> void:
 		hurtBoxLayer.monitorable = true
 		end_dash()
 		
-	else:	
-		velocity.x = move_toward(velocity.x, 0, SPEED)
 		
-	move_and_slide()
 
 		
 func start_dash() -> void:
+	animationPlayer.play("dash")
 	isdashing = true
 	dash_duration = dashTime
 	cooldown = cooldownDuration
@@ -144,6 +165,10 @@ func end_dash() -> void:
 	# As good practice, you should replace UI actions with custom gameplay actions.
 
 func animation() -> void:
+	if currentCombo == "Corkscrew":
+		animationPlayer.play("corkscrew")
+		await get_tree().create_timer(0.5).timeout
+		currentCombo = ""
 	if !isInCombo:
 	
 		if !isAttacking:
@@ -175,6 +200,7 @@ func animation() -> void:
 				hurtBoxLayer.changeLayer(5,5)
 				animSprite.play("duck")
 		
+		
 		#weave animations		
 		if Input.is_action_pressed("weave"):
 			animationPlayer.play("weave")
@@ -193,7 +219,16 @@ func animation() -> void:
 			else:
 				animSprite.play("weave")
 				hurtBoxLayer.changeLayer(5,5)
+				
+				
+		if Input.is_action_pressed("weave") || Input.is_action_pressed("duck"):
+			isDodging = true	
+		else: if !Input.is_action_pressed("weave") || !Input.is_action_pressed("duck"):
+			isDodging = false
+		
 		#CODE IT IN LATER SO THAT IF YOUR WEAVING OR DODGING AND YOU PRESS DASH, IT WILL HAVE THE HOP ANIMATION OR DASH ANIMATION RESPECTIVELY, ELSE FOLLOW THIS CODE. MAKE IT GO THE DIRECTION THE WEAVE IS LEANING OR DUCK IS TOWARDS.
+		if velocity.x !=0 && is_on_floor() && !isdashing:
+			animSprite.play("walk")
 		if isdashing and animSprite.flip_h == true and velocity.x > 0 or isdashing and animSprite.flip_h ==false and velocity.x <0 and !isWeaving and !isDucking:
 			animSprite.play("hop")	
 			animationPlayer.play("hop")
@@ -204,7 +239,7 @@ func animation() -> void:
 			animationPlayer.play("dash")
 			hurtBoxLayer.monitorable = false
 		# idle animations
-		else: if !Input.is_anything_pressed() and is_on_floor():
+		else: if !Input.is_anything_pressed() and is_on_floor() && !isdashing && velocity.x == 0:
 			animSprite.play("idle")
 			animationPlayer.play("idle")
 		
@@ -213,6 +248,18 @@ func animation() -> void:
 		if velocity.y > 0 and not is_on_floor() and !isdashing:
 			animSprite.play("falling")
 
+func soundEffects(action : String) -> void:
+	if sfx_library.has(action):
+		var sound = sfx_library[action]
+		sfx.stream = sound.pick_random()
+		print(sfx.stream)
+		sfx.pitch_scale = randf_range(0.8,1.2)
+		print(sfx.pitch_scale)
+		sfx.play()
+	else:
+		print("No sound list found for ", action)
+
+		pass
 func set_health(amount : float):
 	currentHealth = amount
 	healthBar.set_health(currentHealth)
@@ -228,8 +275,8 @@ func input() -> void:
 		record_input("left")
 	if Input.is_action_just_pressed("right"):
 		record_input("right")
-	if Input.is_action_just_pressed("jump"):
-		record_input("jump")
+	"""if Input.is_action_just_pressed("jump"):
+		record_input("jump")"""
 	if Input.is_action_just_pressed("dash"):
 		record_input("dash")
 	if Input.is_action_just_pressed("attack"):
@@ -257,10 +304,11 @@ func input() -> void:
 		else: if Input.is_action_just_pressed("weave"):
 			record_input("weave")
 		pass
+
+
 func start_combo_timer():
-	comboTimer = comboDuration
-	
-	
+	comboTimer = comboDuration	
+
 func check_combos() -> void:
 	if inputSequence == ["left", "right", "left", "right"] and !is_on_floor() or inputSequence == ["right", "left", "right", "left"] and !is_on_floor():
 		isInCombo = true
@@ -276,6 +324,7 @@ func check_combos() -> void:
 		inputSequence = []
 	
 	pass
+
 func combo_excecute() -> void:
 	pass
 	
@@ -292,7 +341,7 @@ func record_input(action):
 		print(action)
 		print(inputSequence)
 		comboTimer = comboDuration
-		check_combos()
+		check_combos()	
 		
 func awaitControls(yes : bool):
 	if yes:
@@ -303,8 +352,4 @@ func awaitControls(yes : bool):
 	if !yes:
 		self.set_physics_process(true)
 		awaitingForControls = false
-		
-
-
-
-	
+			

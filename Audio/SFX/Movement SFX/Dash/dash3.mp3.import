@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dpbyfnm578nwt"
+path="res://.godot/imported/dash3.mp3-c13506cae847d869d78fdff6aa0969fd.mp3str"
+
+[deps]
+
+source_file="res://Audio/SFX/Movement SFX/Dash/dash3.mp3"
+dest_files=["res://.godot/imported/dash3.mp3-c13506cae847d869d78fdff6aa0969fd.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

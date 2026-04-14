@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://di5di0dp0ncoa"
-path="res://.godot/imported/goofyahmusica.wav-bad641bbe945606645747a01173d15fb.sample"
+path="res://.godot/imported/goofyahmusica.wav-4a0def3929349cf60bdaab011efef9a2.sample"
 
 [deps]
 
-source_file="res://Audio/goofyahmusica.wav"
-dest_files=["res://.godot/imported/goofyahmusica.wav-bad641bbe945606645747a01173d15fb.sample"]
+source_file="res://Audio/Music/goofyahmusica.wav"
+dest_files=["res://.godot/imported/goofyahmusica.wav-4a0def3929349cf60bdaab011efef9a2.sample"]
 
 [params]
 
