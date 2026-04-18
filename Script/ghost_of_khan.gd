@@ -72,20 +72,25 @@ func take_damage(amount : float):
 		if animSprite.flip_h == false:
 			lastVelocity = -SPEED
 		if animSprite.flip_h == true:
-			lastVelocity	= SPEED
-	velocity.x = 0
+			lastVelocity	= SPEED		
+	velocity.x =0
 	animationPlayer.play("hurt")
 	await animationPlayer.animation_finished
-	velocity.x = lastVelocity + 500
+	velocity.x = lastVelocity
 	animSprite.play(lastAnimation)
-	await get_tree().create_timer(1.0)
-	velocity.x -=500
+	
+	for i in range(randi_range(0,5)):
+		
+		if animationPlayer.current_animation != "hurt":
+			print("Flipped!")
+			await get_tree().create_timer(randf_range(0,1.2)).timeout
+			emitFlip()
 	print("BACK ON!")
 	animSprite.frame = lastFrame
 	
 	currentHealth-=amount
 	if currentHealth <=0:
-		get_tree().call_deferred("change_scene_to_packed", youWin)
+		get_tree().call_deferred("changea_scene_to_packed", youWin)
 		queue_free()
 		
 		
@@ -105,14 +110,14 @@ func awaitControls(yes : bool):
 		
 func emitFlip():
 	velocity.x = -velocity.x
-	if getChance():
+	"""if getChance():
 		animSprite.play("Attack")
 		arrowNode.start_attack()
 		isAttacking = true
 		await get_tree().create_timer(5.0).timeout
 		isAttacking = false
 	if !getChance() && !isAttacking:
-		animSprite.play("Dash")
+		animSprite.play("Dash")"""
 func getChance() -> bool:
 	if !isAttacking:
 		return randf() < (1.0/2.0)
