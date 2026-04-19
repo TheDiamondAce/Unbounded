@@ -110,14 +110,14 @@ func awaitControls(yes : bool):
 		
 func emitFlip():
 	velocity.x = -velocity.x
-	"""if getChance():
+	if getChance():
 		animSprite.play("Attack")
 		arrowNode.start_attack()
 		isAttacking = true
 		await get_tree().create_timer(5.0).timeout
 		isAttacking = false
 	if !getChance() && !isAttacking:
-		animSprite.play("Dash")"""
+		animSprite.play("Dash")
 func getChance() -> bool:
 	if !isAttacking:
 		return randf() < (1.0/2.0)

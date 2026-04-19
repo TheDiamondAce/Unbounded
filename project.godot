@@ -17,6 +17,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 config/name="Unbounded"
 run/main_scene="uid://b6pv47a0svg80"
 config/features=PackedStringArray("4.6", "GL Compatibility")
+boot_splash/image="uid://cke1gmtbbptre"
 config/icon="res://icon.svg"
 
 [display]

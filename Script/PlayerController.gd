@@ -60,13 +60,18 @@ var sfx_library = {
 	],
 	#dash sound effects
 	"dash": [
-		preload("res://Audio/SFX/Movement SFX/Dash/dash1.mp3"),
 		preload("res://Audio/SFX/Movement SFX/Dash/dash2.mp3"),
 		preload("res://Audio/SFX/Movement SFX/Dash/dash3.mp3"),
-		preload("res://Audio/SFX/Movement SFX/Dash/dash4.mp3")
 	],
-	"corkscrew": [ preload("res://Audio/SFX/Attack_SFX/Combos/Corkscrew/corkscrew1.mp3")]
+	"corkscrew": [ preload("res://Audio/SFX/Attack_SFX/Combos/Corkscrew/corkscrew1.mp3")],
 	
+	"hit": {
+		
+		"light": preload("res://Audio/SFX/Attack_SFX/Hits/hit1_light.mp3"),
+		"medium": preload("res://Audio/SFX/Attack_SFX/Hits/hit1_medium.mp3"),
+		"hard": preload("res://Audio/SFX/Attack_SFX/Hits/hit1_hard.mp3")
+		
+	}	
 }
 
 	#to test out if healthbar works or not
@@ -248,14 +253,23 @@ func animation() -> void:
 		if velocity.y > 0 and not is_on_floor() and !isdashing:
 			animSprite.play("falling")
 
-func soundEffects(action : String) -> void:
+func soundEffects(action : String, soundList = "", db : float = 0) -> void:
 	if sfx_library.has(action):
 		var sound = sfx_library[action]
-		sfx.stream = sound.pick_random()
-		print(sfx.stream)
-		sfx.pitch_scale = randf_range(0.8,1.2)
-		print(sfx.pitch_scale)
-		sfx.play()
+		var selected_sound = null
+		if sound is Dictionary:
+			if sound.has(soundList):
+				selected_sound = sound[soundList]
+		elif sound is Array:
+			selected_sound = sound.pick_random()
+		
+		if selected_sound is AudioStream:
+			sfx.stream = selected_sound
+			sfx.pitch_scale = randf_range(0.8,1.2)
+			sfx.volume_db = db
+			sfx.play()		
+		else:
+			print("No audio stream for: ",action + " ", soundList)	
 	else:
 		print("No sound list found for ", action)
 
@@ -267,6 +281,12 @@ func set_health(amount : float):
 	
 func take_damage(amount: float):
 	currentHealth -= amount
+	if amount <= 30 && amount >0:
+		soundEffects("hit","light")
+	if amount > 30 && amount <= 70:
+		soundEffects("hit","medium")
+	if amount > 70:
+		soundEffects("hit","hard", 10) 
 	if currentHealth <=0:
 		get_tree().change_scene_to_packed(youLoseScene)
 		
