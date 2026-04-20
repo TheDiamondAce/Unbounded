@@ -194,6 +194,7 @@ shape = SubResource("RectangleShape2D_nuk6u")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=705874008]
 stream = ExtResource("8_y7qrv")
+volume_db = -5.0
 autoplay = true
 
 [node name="BolatbekGabidenDsLTvf1zEUnsplash" type="Sprite2D" parent="." unique_id=638862652]
