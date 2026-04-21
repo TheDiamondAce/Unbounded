@@ -130,7 +130,7 @@ func emitFlip(priority = false):
 				else:
 					animSprite.play("Attack_Melee")
 					isAttacking = true
-					await get_tree().create_timer(1.667).timeout
+					await get_tree().create_timer(1.5).timeout
 					animationPlayer.play("attack_melee")
 					await animationPlayer.animation_finished
 					isAttacking = false
