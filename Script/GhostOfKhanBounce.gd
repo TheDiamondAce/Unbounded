@@ -13,7 +13,7 @@ func _process(delta: float) -> void:
 
 func _on_bouncer_area_entered(area: Area2D) -> void:
 	if area.is_in_group("GhostOfKhan"):
-		ghostOfKhan.emitFlip()
+		ghostOfKhan.emitFlip(true)
 		return
 	
 		

@@ -20,6 +20,7 @@ var isAttacking
 signal Attacking
 var selfFlip
 var flipCountdown = 3
+var flipLocked = 0
 #Hurtbox for the boss is really big so you can actually hit, make 3 modes where one is easy, one is normal, one is hard, for now its easy for easier understanding.
 func _ready() -> void:
 	youWin = preload("res://Scene/youWin.tscn")
@@ -28,6 +29,8 @@ func _ready() -> void:
 	currentHealth = currentHealth
 	animSprite.play("Start")
 func _physics_process(delta: float) -> void:
+	if flipLocked > 0:
+		flipLocked -= delta
 	if velocity.x < 0:
 		animSprite.flip_h = false
 	if velocity.x > 0:
@@ -41,7 +44,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
-	if animSprite.animation == "Dash" or animSprite.animation == "Attack":
+	if animSprite.animation == "Dash" or animSprite.animation == "Attack" or animSprite.animation == "Attack_Melee":
 		
 		if walkTime.time_left <=0:
 			sfx.pitch_scale = randf_range(0.8,1.2)
@@ -108,16 +111,33 @@ func awaitControls(yes : bool):
 		animSprite.play("Dash")
 		velocity.x = -SPEED
 		
-func emitFlip():
-	velocity.x = -velocity.x
-	if getChance():
-		animSprite.play("Attack")
-		arrowNode.start_attack()
-		isAttacking = true
-		await get_tree().create_timer(5.0).timeout
-		isAttacking = false
-	if !getChance() && !isAttacking:
-		animSprite.play("Dash")
+func emitFlip(priority = false):
+	if flipLocked <=0:
+		print("UNLOCKED")
+		if priority:
+			velocity.x = -velocity.x
+			print("LOCKED")
+			flipLocked =2.0
+			
+			if getChance():
+				var randAttack = randi_range(1,2)
+				if randAttack ==1:
+					animSprite.play("Attack")
+					arrowNode.start_attack()
+					isAttacking = true
+					await get_tree().create_timer(5.0).timeout
+					isAttacking = false
+				else:
+					animSprite.play("Attack_Melee")
+					isAttacking = true
+					await get_tree().create_timer(1.667).timeout
+					animationPlayer.play("attack_melee")
+					await animationPlayer.animation_finished
+					isAttacking = false
+			if !getChance() && !isAttacking:
+				animSprite.play("Dash")
+		else:
+			velocity.x = -velocity.x
 func getChance() -> bool:
 	if !isAttacking:
 		return randf() < (1.0/2.0)

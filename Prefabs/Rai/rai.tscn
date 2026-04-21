@@ -412,6 +412,10 @@ tracks/5/keys = {
 "values": [0.0]
 }
 
+[sub_resource type="Animation" id="Animation_7ot64"]
+resource_name = "hit"
+length = 0.53333336
+
 [sub_resource type="Animation" id="Animation_dscc0"]
 resource_name = "hook"
 length = 0.5
@@ -940,6 +944,7 @@ _data = {
 &"corkscrew": SubResource("Animation_s15a3"),
 &"dash": SubResource("Animation_nxdfs"),
 &"duck": SubResource("Animation_a7bn1"),
+&"hit": SubResource("Animation_7ot64"),
 &"hook": SubResource("Animation_dscc0"),
 &"hop": SubResource("Animation_n1hvi"),
 &"idle": SubResource("Animation_lwmko"),
@@ -956,7 +961,7 @@ size = Vector2(13.1965, 76.4256)
 size = Vector2(56, 4)
 
 [node name="Rai" type="CharacterBody2D" unique_id=809542444 node_paths=PackedStringArray("healthBar", "attackArea", "hurtBoxLayer", "sfx") groups=["Player"]]
-z_index = 4
+z_index = 1
 script = ExtResource("1_4vrd6")
 impVelocity = 1200.0
 cooldownDuration = 1.2

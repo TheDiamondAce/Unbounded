@@ -213,6 +213,7 @@
 [ext_resource type="Texture2D" uid="uid://y7ku2qm0580o" path="res://images/Spritesheets/Ghost_Of_Khan/The_Ghost_Of_Khan_Melee/0066.png" id="155_8pkpx"]
 [ext_resource type="Texture2D" uid="uid://4bi5n8os47t2" path="res://images/Spritesheets/Ghost_Of_Khan/The_Ghost_Of_Khan_Melee/0067.png" id="156_jn3j6"]
 [ext_resource type="Texture2D" uid="uid://bf81rqat7asbl" path="res://images/Spritesheets/Ghost_Of_Khan/The_Ghost_Of_Khan_Melee/0068.png" id="157_ieih4"]
+[ext_resource type="Script" uid="uid://73xxg0mh51c4" path="res://Script/MyHitbox.gd" id="214_568ej"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r6vt7"]
 size = Vector2(1144, 56)
@@ -896,6 +897,8 @@ size = Vector2(190, 196.66667)
 default_base_scale = 14.55
 default_font_size = 50
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b3my7"]
+
 [sub_resource type="Animation" id="Animation_7kgpg"]
 length = 0.001
 tracks/0/type = "value"
@@ -946,10 +949,182 @@ tracks/3/keys = {
 "update": 1,
 "values": [&"Hurt"]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MyHitbox/attackBox:shape")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("RectangleShape2D_b3my7")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MyHitbox/attackBox:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MyHitbox/attackBox:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-43.333344, -43.333336)]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("MyHitbox/attackBox:rotation")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("MyHitbox/attackBox:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("MyHitbox/attackBox:skew")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("MyHitbox/attackBox:shape:size")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(20, 20)]
+}
+
+[sub_resource type="Animation" id="Animation_i5kt2"]
+resource_name = "attack_melee"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MyHitbox/attackBox:shape")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [SubResource("RectangleShape2D_b3my7"), SubResource("RectangleShape2D_b3my7")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MyHitbox/attackBox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MyHitbox/attackBox:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(1.6666539, 96.66667), Vector2(-43.333344, -43.333336)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MyHitbox/attackBox:rotation")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0.0, 0.0]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MyHitbox/attackBox:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(1, 1), Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("MyHitbox/attackBox:skew")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.05234375),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MyHitbox/attackBox:shape:size")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Vector2(808.3334, 171.66666), Vector2(20, 20)]
+}
 
 [sub_resource type="Animation" id="Animation_p1nc3"]
 resource_name = "hurt"
-length = 0.5
+length = 0.2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -957,7 +1132,7 @@ tracks/0/path = NodePath("KhanAnimations:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.5),
+"times": PackedFloat32Array(0, 0.2),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(0.516356, 0.397991, 1, 1), Color(1, 1, 1, 1)]
@@ -993,7 +1168,7 @@ tracks/3/path = NodePath("KhanAnimations:offset")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.0666667, 0.166667, 0.233333, 0.333333, 0.433333),
+"times": PackedFloat32Array(0, 0.04, 0.08, 0.12, 0.16, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(10, 0), Vector2(-10, 0), Vector2(10, 0), Vector2(0, 0), Vector2(-10, 0)]
@@ -1029,6 +1204,7 @@ tracks/0/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_a7hro"]
 _data = {
 &"RESET": SubResource("Animation_7kgpg"),
+&"attack_melee": SubResource("Animation_i5kt2"),
 &"hurt": SubResource("Animation_p1nc3"),
 &"normal": SubResource("Animation_8w7g1")
 }
@@ -1088,3 +1264,15 @@ volume_db = 9.123
 
 [node name="Timer" type="Timer" parent="." unique_id=646967185]
 one_shot = true
+
+[node name="MyHitbox" type="Area2D" parent="." unique_id=1193741828]
+script = ExtResource("214_568ej")
+collisionLayer = 5
+damage = 90.0
+metadata/_custom_type_script = "uid://73xxg0mh51c4"
+
+[node name="attackBox" type="CollisionShape2D" parent="MyHitbox" unique_id=836130811]
+position = Vector2(-43.333344, -43.333336)
+shape = SubResource("RectangleShape2D_b3my7")
+disabled = true
+debug_color = Color(1, 0.078431375, 0.047058824, 0.53333336)
