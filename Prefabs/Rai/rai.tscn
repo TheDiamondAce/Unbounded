@@ -11,11 +11,14 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0xflu"]
 size = Vector2(0, 0)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqr50"]
+size = Vector2(20, 72)
+
 [sub_resource type="Animation" id="Animation_nqr50"]
 length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
-tracks/0/enabled = true
+tracks/0/enabled = false
 tracks/0/path = NodePath("Rai_Animation:animation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
@@ -100,34 +103,70 @@ tracks/6/keys = {
 tracks/7/type = "value"
 tracks/7/imported = false
 tracks/7/enabled = true
-tracks/7/path = NodePath("MyHurtBox/hurtArea:shape:size")
+tracks/7/path = NodePath("MyHurtBox/hurtArea:shape")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(13.1965, 76.4256)]
+"update": 1,
+"values": [SubResource("RectangleShape2D_nqr50")]
 }
 tracks/8/type = "value"
 tracks/8/imported = false
 tracks/8/enabled = true
-tracks/8/path = NodePath("MyHurtBox/hurtArea:position")
+tracks/8/path = NodePath("MyHurtBox/hurtArea:shape:size")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(-2.08283, 16.7974)]
+"values": [Vector2(20, 72)]
 }
 tracks/9/type = "value"
 tracks/9/imported = false
 tracks/9/enabled = true
-tracks/9/path = NodePath("MyHurtBox/hurtArea:rotation")
+tracks/9/path = NodePath("MyHurtBox/hurtArea:position")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 8)]
+}
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("MyHurtBox/hurtArea:rotation")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/11/type = "value"
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/path = NodePath("MyHurtBox/hurtArea:scale")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/12/type = "value"
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/path = NodePath("MyHurtBox/hurtArea:skew")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
@@ -954,9 +993,6 @@ _data = {
 &"weave": SubResource("Animation_2rbpt")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nqr50"]
-size = Vector2(13.1965, 76.4256)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xj1f8"]
 size = Vector2(56, 4)
 
@@ -977,7 +1013,7 @@ sfx = NodePath("SFX")
 position = Vector2(0, 46)
 scale = Vector2(0.2, 0.2)
 sprite_frames = ExtResource("2_p1qhu")
-animation = &"punch"
+animation = &"falling"
 offset = Vector2(-4.99975, -185)
 
 [node name="MyHitbox" type="Area2D" parent="Rai_Animation" unique_id=184283379 groups=["PlayerAttack"]]
@@ -1012,7 +1048,7 @@ collisionLayer = 5
 collisionMask = 5
 
 [node name="hurtArea" type="CollisionShape2D" parent="MyHurtBox" unique_id=979465258]
-position = Vector2(-2.08283, 16.7974)
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_nqr50")
 
 [node name="floorCollider" type="CollisionShape2D" parent="." unique_id=795154654 groups=["Player"]]

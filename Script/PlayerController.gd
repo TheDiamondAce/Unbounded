@@ -77,6 +77,8 @@ var sfx_library = {
 
 	#to test out if healthbar works or not
 func _physics_process(delta: float) -> void:
+	if animationPlayer.current_animation != "RESET" && !isAttacking:
+		animationPlayer.play("RESET")
 	if currentCombo == "Corkscrew":
 		velocity = Vector2.ZERO
 	"""print(velocity.x)
@@ -166,6 +168,7 @@ func start_dash() -> void:
 	
 func end_dash() -> void:
 	isdashing = false
+	resetAnim()
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -173,16 +176,19 @@ func end_dash() -> void:
 func animation() -> void:
 	if currentCombo == "Corkscrew":
 		animationPlayer.play("corkscrew")
-		await get_tree().create_timer(0.5).timeout
+		isAttacking = true	
+		await animationPlayer.animation_finished
+		isAttacking = false
 		currentCombo = ""
 	if !isInCombo:
 	
-		if velocity.x ==0:
+			
+		if velocity.x !=0 && is_on_floor() && !isdashing:
+			animSprite.play("walk")
+		else: 
 			animationPlayer.play("idle")
 			hurtBoxLayer.changeLayer(5,5)
 			animSprite.z_index = 1
-		elif velocity.x !=0 && is_on_floor() && !isdashing:
-			animSprite.play("walk")
 		#attack animation
 		if Input.is_action_just_pressed("attack") and is_on_floor():
 			isAttacking = true
@@ -382,3 +388,5 @@ func awaitControls(yes : bool):
 		self.set_physics_process(true)
 		awaitingForControls = false
 			
+func resetAnim() -> void:
+	animationPlayer.play("RESET")

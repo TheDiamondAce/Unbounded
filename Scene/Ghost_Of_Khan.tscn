@@ -11,6 +11,11 @@
 [ext_resource type="AudioStream" uid="uid://bjuxf3gt1jamx" path="res://Audio/Music/Batzorig Vaanchig - Chinggis Khaanii Magtaal   Slowed + Reverb (1).mp3" id="8_y7qrv"]
 [ext_resource type="Texture2D" uid="uid://mayixtxednoo" path="res://images/Spritesheets/Background/bolatbek-gabiden-dsL_tvf1Z-E-unsplash.jpg" id="9_q3fs2"]
 
+[sub_resource type="Theme" id="Theme_nuk6u"]
+default_font_size = 20
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_3b470"]
+
 [sub_resource type="Animation" id="Animation_pvrid"]
 length = 0.001
 tracks/0/type = "value"
@@ -83,7 +88,7 @@ _data = {
 [sub_resource type="Theme" id="Theme_aghwi"]
 default_font_size = 100
 
-[sub_resource type="Theme" id="Theme_nuk6u"]
+[sub_resource type="Theme" id="Theme_3b470"]
 default_font_size = 50
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6ootx"]
@@ -94,6 +99,9 @@ size = Vector2(4593, 136)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nuk6u"]
 size = Vector2(572, 1541)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3b470"]
+size = Vector2(477, 3864)
+
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3b470"]
 normal = Vector2(-1, 0)
 
@@ -102,6 +110,40 @@ normal = Vector2(1, 0)
 
 [node name="GhostOfKhan" type="Node2D" unique_id=807642396]
 script = ExtResource("1_lbhm0")
+
+[node name="Menu" type="RichTextLabel" parent="." unique_id=793832986]
+z_index = 5
+offset_left = -639.0
+offset_top = -18.00003
+offset_right = 708.0
+offset_bottom = 587.0
+theme = SubResource("Theme_nuk6u")
+text = "MENU: Press ESC to go back*
+
+Controls:
+Q to Dodge Left 
+E to Dodge Right 
+W to Slip Back; Move your head back 
+S to Duck
+ A to Move Left
+ D to Move Right
+ Shift to Dash
+ Space to Jump 
+R to Restart 
+Space and Enter to skip (Only At Start Screen)
+Combos:
+Left, Right, Left, Right or Vice Versa: Corkscrew!! (done in the air)"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Menu" unique_id=494981309]
+modulate = Color(0, 0, 0, 0.44313726)
+z_index = -1
+position = Vector2(581.9999, 301.00006)
+rotation = -3.1415925
+scale = Vector2(1187.3635, -576.4545)
+texture = SubResource("PlaceholderTexture2D_3b470")
 
 [node name="Intro" type="Control" parent="." unique_id=1200214255]
 z_index = 8
@@ -132,7 +174,7 @@ offset_left = -480.0
 offset_top = 150.0
 offset_right = 493.0
 offset_bottom = 571.0
-theme = SubResource("Theme_nuk6u")
+theme = SubResource("Theme_3b470")
 text = "The Ghost Of Khan
 
 
@@ -192,6 +234,16 @@ shape = SubResource("RectangleShape2D_nuk6u")
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D2/Bouncer" unique_id=93864535]
 position = Vector2(-6108, -448)
 shape = SubResource("RectangleShape2D_nuk6u")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="StaticBody2D2/Bouncer" unique_id=697090027]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2/Bouncer/StaticBody2D" unique_id=2011171205]
+position = Vector2(4257.5, -816)
+shape = SubResource("RectangleShape2D_3b470")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2/Bouncer/StaticBody2D/CollisionShape2D" unique_id=499641619]
+position = Vector2(-10881.5, 88)
+shape = SubResource("RectangleShape2D_3b470")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=705874008]
 stream = ExtResource("8_y7qrv")

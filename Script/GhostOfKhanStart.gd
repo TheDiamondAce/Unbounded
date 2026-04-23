@@ -6,9 +6,12 @@ extends Node2D
 @onready var ghostOfKhan = $GhostOfKhan
 @onready var intro = $Intro
 @onready var title = $Intro/RichTextLabel2
+@onready var menu = $Menu
+var isInMenu = false	
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	menu.hide()
 	player.awaitControls(true)
 	ghostOfKhan.awaitControls(true)
 	title.show()
@@ -24,4 +27,15 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("menu") && isInMenu == false:
+		menu.show()
+		isInMenu = true
+		player.awaitControls(true)
+		ghostOfKhan.awaitControls(true)
+	else: if Input.is_action_just_pressed("menu") && isInMenu == true:
+		menu.hide()
+		isInMenu = false
+		player.awaitControls(false)
+		ghostOfKhan.awaitControls(false)
+		
 	pass

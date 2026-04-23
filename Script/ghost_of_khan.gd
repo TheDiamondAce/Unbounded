@@ -6,7 +6,15 @@ class_name GhostOfKhan extends CharacterBody2D
 @onready var intro = $"../Intro"
 @onready var youWin = preload("res://Scene/youWin.tscn")
 @export var healthBar : HealthBar
+@export var walkSFX : AudioStreamPlayer2D
 @export var sfx : AudioStreamPlayer2D
+var sfx_library = {
+	"slash": [
+		preload("res://Audio/SFX/Attack_SFX/Slash/slash1.mp3"),
+		preload("res://Audio/SFX/Attack_SFX/Slash/slash2.mp3"),
+		preload("res://Audio/SFX/Attack_SFX/Slash/slash3.mp3")
+	]
+}
 
 @export_category("Sound Effect Audio Variables")
 var walking = preload("res://Audio/SFX/Movement SFX/horsewalking.mp3")
@@ -16,11 +24,12 @@ const SPEED = 900
 const JUMP_VELOCITY = -400.0
 var currentHealth
 var awaitingForControls = false
-var isAttacking
+var isAttacking = false
 signal Attacking
 var selfFlip
 var flipCountdown = 3
 var flipLocked = 0
+
 #Hurtbox for the boss is really big so you can actually hit, make 3 modes where one is easy, one is normal, one is hard, for now its easy for easier understanding.
 func _ready() -> void:
 	youWin = preload("res://Scene/youWin.tscn")
@@ -29,6 +38,10 @@ func _ready() -> void:
 	currentHealth = currentHealth
 	animSprite.play("Start")
 func _physics_process(delta: float) -> void:
+	if awaitingForControls:
+		velocity.x =0
+		
+	
 	if flipLocked > 0:
 		flipLocked -= delta
 	if velocity.x < 0:
@@ -44,11 +57,13 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		
+		
 	if animSprite.animation == "Dash" or animSprite.animation == "Attack" or animSprite.animation == "Attack_Melee":
+	
 		
 		if walkTime.time_left <=0:
-			sfx.pitch_scale = randf_range(0.8,1.2)
-			sfx.play()
+			walkSFX.pitch_scale = randf_range(0.8,1.2)
+			walkSFX.play()
 			walkTime.start(0.5)
 
 	move_and_slide()
@@ -127,21 +142,47 @@ func emitFlip(priority = false):
 					isAttacking = true
 					await get_tree().create_timer(5.0).timeout
 					isAttacking = false
+					resetAnim()
 				else:
 					animSprite.play("Attack_Melee")
 					isAttacking = true
 					await get_tree().create_timer(1.5).timeout
+					soundEffects("slash")
 					animationPlayer.play("attack_melee")
 					await animationPlayer.animation_finished
 					isAttacking = false
+					resetAnim()
 			if !getChance() && !isAttacking:
 				animSprite.play("Dash")
 		else:
 			velocity.x = -velocity.x
+
+func soundEffects(action : String, soundList = "", db : float = 0) -> void:
+	if sfx_library.has(action):
+		var sound = sfx_library[action]
+		var selected_sound = null
+		if sound is Dictionary:
+			if sound.has(soundList):
+				selected_sound = sound.pick_random()
+		elif sound is Array:
+			selected_sound = sound.pick_random()
+		if selected_sound is AudioStream:
+			sfx.stream = selected_sound
+			sfx.pitch_scale = randf_range(0.8,1.2)
+			sfx.volume_db = db
+			sfx.play()
+		else:
+			print("no audio stream for: ",action + " ", soundList)
+	else:
+		print("No sound list found for ", action)
+	pass
+
+
 func getChance() -> bool:
 	if !isAttacking:
 		return randf() < (1.0/2.0)
 	return false
 		
-
+func resetAnim() ->void:
+	animationPlayer.play("RESET")
 	
