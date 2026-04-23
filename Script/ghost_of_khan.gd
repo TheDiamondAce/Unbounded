@@ -28,7 +28,6 @@ func _ready() -> void:
 		velocity.x =0
 	currentHealth = currentHealth
 	animSprite.play("Start")
-	
 func _physics_process(delta: float) -> void:
 	if flipLocked > 0:
 		flipLocked -= delta
@@ -61,7 +60,7 @@ func set_health(amount : int):
 
 func take_damage(amount : float):
 	#fix the fact that if you get hit spammed, boss gets stun locked and its impossible for him to move
-	"""var lastAnimation
+	var lastAnimation
 	var lastFrame
 	var lastVelocity
 	print("OW")
@@ -90,11 +89,12 @@ func take_damage(amount : float):
 			await get_tree().create_timer(randf_range(0,1.2)).timeout
 			emitFlip()
 	print("BACK ON!")
-	animSprite.frame = lastFrame"""
-	animationPlayer.play("hurt")
+	animSprite.frame = lastFrame
+	
 	currentHealth-=amount
 	if currentHealth <=0:
-		get_tree().change_scene_to_packed(youWin)
+		get_tree().call_deferred("changea_scene_to_packed", youWin)
+		queue_free()
 		
 		
 		
@@ -142,8 +142,6 @@ func getChance() -> bool:
 	if !isAttacking:
 		return randf() < (1.0/2.0)
 	return false
-	
-	
 		
 
 	
